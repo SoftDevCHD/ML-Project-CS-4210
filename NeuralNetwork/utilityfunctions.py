@@ -25,7 +25,7 @@ def accuracy(outputs, labels):
     return torch.tensor(torch.sum(preds == labels).item() / len(preds))
 
 
-def predict_crack(data, mod, device):
+def predict_winning_team(data, mod, device):
     x = to_device(data, device)
     predictions = mod(x)
     return predictions[0].item()
@@ -68,13 +68,3 @@ def fit(num_epochs, lr, modl, train_load, val_load, opt_func=torch.optim.SGD):
         modl.epoch_end(epoch, result)
         history.append(result)
     return history
-
-
-def distance(s: tuple, x: float, y: float, z: float) -> float:
-    return math.sqrt((s[0]+x)**2 + (s[1]-y)**2 + (s[2]-z)**2)  # add x because it is always negative
-
-
-def min_max(x):
-    temp = x
-    temp[:] = (x - x.min()) / (x.max() - x.min())
-    return temp

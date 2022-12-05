@@ -90,4 +90,4 @@ if __name__ == '__main__':
 
     # Testing model
     x, target = test_data[0]
-    print('Label: ', target, ', Predicted: ', predict_crack(x, model, device))
+    print('Label: ', target, ', Predicted: ', predict_winning_team(x, model, device))
