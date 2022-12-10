@@ -1,6 +1,7 @@
 import csv
 import random
 import time
+import matplotlib.pyplot as plt
 from sklearn.naive_bayes import CategoricalNB
 from sklearn import tree
 from sklearn import svm
@@ -44,7 +45,6 @@ KNN: Yielded 57%. Works best at around 20 neighbors. Without binning. 4 Seconds 
 
 RandomForest: Yielded 58% with max_depth=4 and without binning. 26 seconds each iteration
 '''
-
 
 def preprocess(dataset, headers, binning):
     pre_time = time.time()
@@ -135,21 +135,52 @@ def train_test(data, training_portion, model_class, iterations):
 
     result = f'The highest accuracy of {model_class} is {highest_accuracy}. It took {(time.time() - start_time)} secs.'
     if failures > 0:
-        result += f'It failed {failures} times.'
+        result += f' It failed {failures} times.'
     print(result)
+    return highest_accuracy
 
 
+filename = 'dataset_extra.csv'
 dataset = []
-with open('reduced_dataset.csv', 'r') as csvfile:
+with open(filename, 'r') as csvfile:
     reader = csv.reader(csvfile)
     for feature, row in enumerate(reader):
         dataset.append(row)
 
 headers = dataset.pop(0)
+
+
+if filename == 'dataset_extra.csv':
+    print('Handling Sparse Features in the Dataset')
+    # Using Game stats features. Fill in holes with the feature average
+    index = [9, 10, 11, 12, 13, 14, 15, 16]
+    for i in index:
+        missing = 0
+        avg = 0
+        for sample in dataset:
+            if len(sample[i]) != 0:
+                avg += float(sample[i])
+            else:
+                missing += 1
+        avg = round(avg / (len(dataset) - missing), 1)
+        for sample in dataset:
+            if len(sample[i]) == 0:
+                sample[i] = str(avg)
+
+
 processed_dataset = preprocess(dataset, headers, False)
 
-train_test(processed_dataset, 0.8, CategoricalNB(), 10)
-train_test(processed_dataset, 0.8, tree.DecisionTreeClassifier(max_depth=10), 10)
-train_test(processed_dataset, 0.8, KNeighborsClassifier(n_neighbors=2000), 1)
-train_test(processed_dataset, 0.8, svm.SVC(), 1)
-train_test(processed_dataset, 0.8, RandomForestClassifier(max_depth=4), 1)
+values = []
+names = ["Naive Bayes", "Decision Tree", "KNN", "SVM", "Random Forest"]
+
+values.append(train_test(processed_dataset, 0.8, CategoricalNB(), 10))
+values.append(train_test(processed_dataset, 0.8, tree.DecisionTreeClassifier(max_depth=10), 10))
+values.append(train_test(processed_dataset, 0.8, KNeighborsClassifier(n_neighbors=2000), 1))
+values.append(train_test(processed_dataset, 0.8, svm.SVC(), 1))
+values.append(train_test(processed_dataset, 0.8, RandomForestClassifier(max_depth=4), 1))
+
+plt.bar(names, values, color='green', width=0.8)
+plt.xlabel("Trained Models")
+plt.ylabel("Highest Accuracy")
+plt.title("FIFA World Cup 2022 Prediction Model results")
+plt.show()
