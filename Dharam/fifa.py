@@ -17,8 +17,8 @@ NOTE: * Following columns are removed:
 
 fifa_data = pd.read_csv('fifa_matches.csv')
 
-# fill missing values with 0
-fifa_data = fifa_data.fillna(0)
+# fill missing values with column mean values
+fifa_data=fifa_data.fillna(fifa_data.mean())
 
 # histogram of home_team_result
 # fifa_data['home_team_result'].hist(bins=5)
@@ -58,16 +58,27 @@ print("Random Forest accuracy: " + str(rf_accuracy))
 print("\nTraining KNN...")
 best_accuracy = 0
 best_k = 1
-for k in range(1,25,2):
+accuracyList = []
+kList = []
+for k in range(1,100,2):
     knn_clf = KNeighborsClassifier(n_neighbors=k)
     #Train the model
     knn_clf.fit(X_training, y_training)
     #Predict the response for test dataset
     knn_prediction = knn_clf.predict(X_test)
     accuracy = accuracy_score(y_test, knn_prediction)
+    accuracyList.append(accuracy)
+    kList.append(k)
     if accuracy > best_accuracy:
         best_k = k
         best_accuracy = accuracy
 
 #print best accuracy 
 print(f"Accuracy for {best_k}-nearest neighbors: {str(best_accuracy)}")
+
+# plot showing accuracies for different k vlaues
+plt.plot(kList, accuracyList)
+plt.xlabel("K")
+plt.ylabel("Accuracy")
+plt.title("Accuracy vs. K")
+plt.show()
