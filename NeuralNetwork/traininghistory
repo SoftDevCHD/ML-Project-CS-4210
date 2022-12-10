@@ -1,0 +1,20 @@
+Creating base modelEpoch [1], val_loss: 1.0237, val_acc: 0.4993
+Epoch [2], val_loss: 0.9821, val_acc: 0.4993
+Epoch [3], val_loss: 0.9973, val_acc: 0.5171
+Epoch [4], val_loss: 0.9680, val_acc: 0.5499
+Epoch [5], val_loss: 0.9579, val_acc: 0.5646
+Epoch [6], val_loss: 0.9488, val_acc: 0.5843
+Epoch [7], val_loss: 0.9618, val_acc: 0.5804
+Epoch [8], val_loss: 0.9487, val_acc: 0.5747
+Epoch [9], val_loss: 0.9442, val_acc: 0.5787
+Epoch [10], val_loss: 0.9471, val_acc: 0.5622
+Epoch [11], val_loss: 0.9561, val_acc: 0.5819
+Epoch [12], val_loss: 0.9542, val_acc: 0.5539
+Epoch [13], val_loss: 0.9624, val_acc: 0.5296
+Epoch [14], val_loss: 0.9380, val_acc: 0.5770
+Epoch [15], val_loss: 0.9451, val_acc: 0.5569
+Epoch [16], val_loss: 0.9371, val_acc: 0.5835
+Epoch [17], val_loss: 0.9942, val_acc: 0.4422
+Epoch [18], val_loss: 0.9400, val_acc: 0.5758
+Epoch [19], val_loss: 0.9342, val_acc: 0.5815
+Epoch [20], val_loss: 0.9323, val_acc: 0.5816

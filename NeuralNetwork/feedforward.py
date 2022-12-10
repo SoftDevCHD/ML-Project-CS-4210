@@ -11,7 +11,7 @@ import pandas as pd
 if __name__ == '__main__':
 
     dataset = pd.read_csv('international_matches.csv')
-    dataframe = dataset.iloc[:, 4:8]
+    dataframe = dataset.iloc[:, 4:6]
     labelframe = dataset.iloc[:, -1]
 
     num_frame = dataframe.select_dtypes(include=['int64', 'float64'])
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     hidden_size2 = 10
     num_classes = 3
     epochs = 20
-    learning_rate = 0.01
+    learning_rate = 0.05
 
     # Move data from CPU to GPU
     print(torch.cuda.is_available())
